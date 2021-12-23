@@ -1,0 +1,32 @@
+name: Code Generation
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - .github/**
+
+jobs:
+  generate-spring-server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: baizhi-edu/action-generate-spring-server@v1.0.0
+        with:
+          project-name: 'openapi'
+          group-id: 'cn.baizhiedu.dev.demo'
+          registry: ${{ secrets.MAVEN_REGISTRY }}
+          username: ${{ secrets.MAVEN_USERNAME }}
+          password: ${{ secrets.MAVEN_PASSWORD }}
+
+  generate-typescript-axios-client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: baizhi-edu/action-generate-typescript-axios-client@v1.0.2
+        with:
+          project-name: '@baizhi-demo/openapi'
+          registry: ${{ secrets.NPM_REGISTRY }}
+          username: ${{ secrets.NPM_USERNAME }}
+          password: ${{ secrets.NPM_PASSWORD }}
+          email: ${{ secrets.NPM_EMAIL }}
